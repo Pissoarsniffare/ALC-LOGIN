@@ -1,5 +1,9 @@
 {% extends "layout.njk" %}
 
 {% block content %}
-  <h1>{{ title }}</h1>
+<main class="container">
+    <h1>{{ title }}</h1>
+    <a href="/login.njk">Logga in</a>
+    <a href="/signup.njk">Registrera dig</a>
+</main>
 {% endblock %}
