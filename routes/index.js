@@ -16,7 +16,6 @@ router.get('/signup', function (req, res) {
 })
 
 router.get('/dbtest', async function (req, res) {
-    res.json({ message: 'Hello' })
     const [result] = await pool.promise().query('SELECT * FROM SÅSIALDMÅKRATERN_LOGIN')
     res.json({result})
 })
