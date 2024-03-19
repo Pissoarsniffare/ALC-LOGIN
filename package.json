@@ -1,7 +1,7 @@
 {
   "name": "alc-login",
   "version": "1.0.0",
-  "description": "SÅSIALDMÅKRATERN SAMÚEL VIGLUNDSSON TSUBASA YAMAMOTO EMIL KESO MALTE LUNDKVIST",
+  "description": "SÅSIALDMÅKRATERN SAMÚEL VIGLUNDSSON TSUBASA YAMAMOTO EMIL KESO MALTE LINDKVIST",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon -e js,html,njk,json ./server.js"
