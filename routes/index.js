@@ -23,10 +23,19 @@ router.post('/login', async function (req, res) {
     const password = req.body.password
     console.log(username, password)
     const [result] = await pool.promise().query(`
-    SELECT SÅSIALDMÅKRATERN_LOGIN.username FROM SÅSIALDMÅKRATERN_LOGIN WHERE SÅSIALDMÅKRATERN_LOGIN.username = "${username}" limit 1`)
-
-  console.log(result)
-    res.render('login.njk', { title: 'Welcome' })
+    SELECT * FROM SÅSIALDMÅKRATERN_LOGIN WHERE SÅSIALDMÅKRATERN_LOGIN.username = ? limit 1`, [username])
+    console.log(result)
+    bcrypt.compare(password, result[0].password, async function(err, result){
+        console.log(result) 
+        if (result){
+            req.session.username = req.body.username
+        console.log(`is logged in:${result} woth username: ${req.session.username}`)
+        return res.redirect('/secret')
+        } else {
+            res.redirect('/login')
+        }
+        
+    })
 
 })
 
