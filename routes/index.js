@@ -15,9 +15,30 @@ router.get('/', function (req, res) {
 
 router.get('/login', function (req, res) {
     res.render('login.njk', { title: 'Welcome' })
+
+})
+
+router.post('/login', async function (req, res) {
+    const username = req.body.username
+    const password = req.body.password
+    console.log(username, password)
+    const [result] = await pool.promise().query(`
+    SELECT SÅSIALDMÅKRATERN_LOGIN.username FROM SÅSIALDMÅKRATERN_LOGIN WHERE SÅSIALDMÅKRATERN_LOGIN.username = "${username}" limit 1`)
+
+  console.log(result)
+    res.render('login.njk', { title: 'Welcome' })
+
 })
 
 router.get('/signup', function (req, res) {
+    res.render('signup.njk', { title: 'Welcome' })
+})
+
+router.post('/signup', async function (req, res) {
+    const signupusername = req.body.signupusername
+    const signuppassword = req.body.signuppassword
+    console.log(signupusername, signuppassword)
+
     res.render('signup.njk', { title: 'Welcome' })
 })
 
