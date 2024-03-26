@@ -10,7 +10,7 @@ const someOtherPlaintextPassword = 'not_bacon';
 
 
 router.get('/', function (req, res) {
-  res.render('index.njk', { title: 'Welcome' })
+  res.render('index.njk', { title: 'VÄLKOMMEN' })
 })
 
 router.get('/login', function (req, res) {
