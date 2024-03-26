@@ -10,7 +10,7 @@ const someOtherPlaintextPassword = 'not_bacon';
 
 
 router.get('/', function (req, res) {
-  res.render('index.njk', { title: 'Welcome' })
+    res.render('index.njk', { title: 'Welcome' })
 })
 
 router.get('/login', function (req, res) {
@@ -25,16 +25,22 @@ router.post('/login', async function (req, res) {
     const [result] = await pool.promise().query(`
     SELECT * FROM SÅSIALDMÅKRATERN_LOGIN WHERE SÅSIALDMÅKRATERN_LOGIN.username = ? limit 1`, [username])
     console.log(result)
-    bcrypt.compare(password, result[0].password, async function(err, result){
-        console.log(result) 
-        if (result){
+
+    if (result.length == 0) {
+        console.log("jag suger")
+        return res.redirect('/login')
+    }
+
+    bcrypt.compare(password, result[0].password, async function (err, result) {
+        console.log(result)
+        if (result) {
             req.session.username = req.body.username
-        console.log(`is logged in:${result} woth username: ${req.session.username}`)
-        return res.redirect('/secret')
+            console.log(`is logged in:${result} woth username: ${req.session.username}`)
+            return res.redirect('/secret')
         } else {
             res.redirect('/login')
         }
-        
+
     })
 
 })
@@ -51,14 +57,18 @@ router.post('/signup', async function (req, res) {
     res.render('signup.njk', { title: 'Welcome' })
 })
 
-router.get('/dbtest', async function (req, res) {
-    const [result] = await pool.promise().query('SELECT * FROM SÅSIALDMÅKRATERN_LOGIN')
-    res.json({result})
+router.get('/secret', function (req, res) {
+    res.render('secret.njk', { title: 'DU ÄR INLOGGAD' })
 })
 
-router.get('/hashtest', async function (req, res){
+router.get('/dbtest', async function (req, res) {
+    const [result] = await pool.promise().query('SELECT * FROM SÅSIALDMÅKRATERN_LOGIN')
+    res.json({ result })
+})
 
-    bcrypt.hash(myPlaintextPassword, saltRounds, function(err, hash) {
+router.get('/hashtest', async function (req, res) {
+
+    bcrypt.hash(myPlaintextPassword, saltRounds, function (err, hash) {
         // Store hash in your password DB.
         console.log(hash)
     });
