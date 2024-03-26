@@ -4,6 +4,7 @@ const router = express.Router()
 const pool = require('../db')
 
 const bcrypt = require('bcrypt');
+const session = require('express-session');
 const saltRounds = 10;
 const myPlaintextPassword = 'test';
 const someOtherPlaintextPassword = 'not_bacon';
@@ -58,6 +59,10 @@ router.post('/signup', async function (req, res) {
 })
 
 router.get('/secret', function (req, res) {
+    
+    if (req.session.username === undefined){
+        return res.redirect('/login')
+        } 
     res.render('secret.njk', { title: 'DU ÄR INLOGGAD' })
 })
 
